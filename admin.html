@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Mindspace</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Page-specific styles */
+        .admin-header {
+            background-color: var(--dark-bg);
+            color: white;
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-welcome h2 {
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+
+        .admin-welcome p {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .admin-tabs {
+            display: flex;
+            background-color: var(--light-bg);
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .admin-tab {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            flex: 1;
+            text-align: center;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .admin-tab:hover {
+            background-color: rgba(108, 99, 255, 0.05);
+        }
+
+        .admin-tab.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .admin-content {
+            display: none;
+        }
+
+        .admin-content.active {
+            display: block;
+        }
+
+        .section-filters {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background-color: var(--background-color);
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .filter-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background-color: var(--background-color);
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+        }
+
+        .search-box input {
+            border: none;
+            background: transparent;
+            margin-left: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .search-box input:focus {
+            outline: none;
+        }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .data-card {
+            background-color: var(--light-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .card-header {
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .card-status {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status-approved {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-rejected {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .card-content {
+            margin-bottom: 1.5rem;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        .card-author {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-date {
+            font-style: italic;
+        }
+
+        .card-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .btn-approve {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .btn-approve:hover {
+            background-color: #c3e6cb;
+        }
+
+        .btn-reject {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .btn-reject:hover {
+            background-color: #f5c6cb;
+        }
+
+        .btn-view {
+            background-color: #e2e3e5;
+            color: #383d41;
+        }
+
+        .btn-view:hover {
+            background-color: #d6d8db;
+        }
+
+        .btn-edit {
+            background-color: #cce5ff;
+            color: #004085;
+        }
+
+        .btn-edit:hover {
+            background-color: #b8daff;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+            background-color: var(--light-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .data-table th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .data-table tr:hover {
+            background-color: rgba(108, 99, 255, 0.05);
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background-color: var(--light-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .stat-title {
+            font-size: 1rem;
+            color: var(--light-text);
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .icon-stress {
+            background-color: #6c63ff;
+        }
+
+        .icon-anxiety {
+            background-color: #63d9ff;
+        }
+
+        .icon-users {
+            background-color: #63ffaf;
+        }
+
+        .icon-total {
+            background-color: #ff6c63;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-change {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.9rem;
+        }
+
+        .change-positive {
+            color: #155724;
+        }
+
+        .change-negative {
+            color: #721c24;
+        }
+
+        .chart-container {
+            background-color: var(--light-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chart-placeholder {
+            text-align: center;
+            color: var(--light-text);
+        }
+
+        .chart-placeholder i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .user-controls {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 1.5rem;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .page-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--background-color);
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .page-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .page-btn:hover:not(.active) {
+            background-color: rgba(108, 99, 255, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .admin-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .admin-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+
+            .admin-tabs {
+                flex-direction: column;
+            }
+
+            .section-filters {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+
+            .data-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+
+        /* Modal styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: var(--light-bg);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            padding: 2rem;
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--light-text);
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            color: var(--primary-color);
+        }
+
+        .modal-body {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .modal-form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .modal-form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .modal-form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Mindspace</h2>
+                <button id="menu-toggle" class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="../index.html"><i class="fas fa-home"></i> Trang chủ (Home)</a>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="mental-check.html"><i class="fas fa-brain"></i> Kiểm tra tâm trạng (Mental Check-in)</a>
+                        <ul class="submenu">
+                            <li><a href="mental-check.html#stress-test">Bài test stress</a></li>
+                            <li><a href="mental-check.html#anxiety-test">Bài test lo âu</a></li>
+                            <li><a href="mental-check.html#results">Kết quả + Gợi ý tài nguyên</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="confession.html"><i class="fas fa-comments"></i> Góc chia sẻ (Confession Box)</a>
+                        <ul class="submenu">
+                            <li><a href="confession.html#form">Form gửi chia sẻ ẩn danh</a></li>
+                            <li><a href="confession.html#stories">Danh sách bài chia sẻ công khai</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="experts.html"><i class="fas fa-user-md"></i> Góc chuyên gia (Expert's Corner)</a>
+                        <ul class="submenu">
+                            <li><a href="experts.html#intro">Giới thiệu chuyên gia/admin tư vấn</a></li>
+                            <li><a href="experts.html#articles">Các bài viết phân tích tâm lý</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="resources.html"><i class="fas fa-book-open"></i> Thư viện tài nguyên (Articles & Tips)</a>
+                        <ul class="submenu">
+                            <li><a href="resources.html#tips">Mẹo thư giãn</a></li>
+                            <li><a href="resources.html#maintain">Duy trì tâm lực</a></li>
+                            <li><a href="resources.html#stories">Câu chuyện truyền cảm hứng</a></li>
+                            <li><a href="resources.html#media">Infographic / Podcast (nếu có)</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="chatbot.html"><i class="fas fa-robot"></i> Chatbot hỗ trợ (Chatbox)</a>
+                        <ul class="submenu">
+                            <li><a href="chatbot.html#chat">Trò chuyện với Mindbot</a></li>
+                            <li><a href="chatbot.html#suggest">Gợi ý nội dung theo tình huống</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="contact.html"><i class="fas fa-envelope"></i> Liên hệ & hỗ trợ (Contact)</a>
+                        <ul class="submenu">
+                            <li><a href="contact.html#hotline">Hotline / email</a></li>
+                            <li><a href="contact.html#form">Trung tâm tư vấn để xuất</a></li>
+                            <li><a href="contact.html#social">Mạng xã hội</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu admin-link active">
+                        <a href="admin.html"><i class="fas fa-lock"></i> Admin Dashboard</a>
+                        <ul class="submenu">
+                            <li><a href="#confessions">Quản lý bài chia sẻ</a></li>
+                            <li><a href="#stats">Thống kê test tâm trạng</a></li>
+                            <li><a href="#users">Quản lý người dùng/chatbot</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="admin-header">
+                <div class="admin-welcome">
+                    <h2>Chào mừng, Admin</h2>
+                    <p>Quản lý nội dung và người dùng của Mindspace tại đây.</p>
+                </div>
+                <div class="admin-actions">
+                    <button class="btn btn-secondary">
+                        <i class="fas fa-cog"></i> Cài đặt
+                    </button>
+                    <button class="btn btn-outlined">
+                        <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                    </button>
+                </div>
+            </div>
+
+            <div class="admin-tabs">
+                <div class="admin-tab active" data-tab="confessions">
+                    <i class="fas fa-comments"></i> Quản lý bài chia sẻ
+                </div>
+                <div class="admin-tab" data-tab="stats">
+                    <i class="fas fa-chart-bar"></i> Thống kê test tâm trạng
+                </div>
+                <div class="admin-tab" data-tab="users">
+                    <i class="fas fa-users"></i> Quản lý người dùng/chatbot
+                </div>
+            </div>
+
+            <!-- Confessions Management Section -->
+            <div id="confessions" class="admin-content active">
+                <div class="section-filters">
+                    <div class="filter-group">
+                        <div class="filter-btn active">Tất cả</div>
+                        <div class="filter-btn">Chờ duyệt</div>
+                        <div class="filter-btn">Đã duyệt</div>
+                        <div class="filter-btn">Đã từ chối</div>
+                    </div>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Tìm kiếm bài chia sẻ...">
+                    </div>
+                </div>
+
+                <div class="card-container">
+                    <!-- Confession Card 1 -->
+                    <div class="data-card">
+                        <div class="card-header">
+                            <div class="card-title">Cảm giác cô đơn giữa đám đông</div>
+                            <div class="card-status status-pending">Chờ duyệt</div>
+                        </div>
+                        <div class="card-meta">
+                            <div class="card-author">
+                                <i class="fas fa-user"></i>
+                                <span>Người dùng ẩn danh</span>
+                            </div>
+                            <div class="card-date">21/10/2023</div>
+                        </div>
+                        <div class="card-content">
+                            <p>Dạo gần đây, tôi thường xuyên cảm thấy cô đơn ngay cả khi đang ở giữa những người bạn thân thiết. Tôi vẫn cười nói, tham gia các hoạt động, nhưng bên trong lại cảm thấy trống rỗng...</p>
+                        </div>
+                        <div class="card-actions">
+                            <button class="action-btn btn-view"><i class="fas fa-eye"></i> Xem</button>
+                            <button class="action-btn btn-approve"><i class="fas fa-check"></i> Duyệt</button>
+                            <button class="action-btn btn-reject"><i class="fas fa-times"></i> Từ chối</button>
+                        </div>
+                    </div>
+
+                    <!-- Confession Card 2 -->
+                    <div class="data-card">
+                        <div class="card-header">
+                            <div class="card-title">Áp lực công việc và kỳ vọng của gia đình</div>
+                            <div class="card-status status-approved">Đã duyệt</div>
+                        </div>
+                        <div class="card-meta">
+                            <div class="card-author">
+                                <i class="fas fa-user"></i>
+                                <span>Người dùng ẩn danh</span>
+                            </div>
+                            <div class="card-date">19/10/2023</div>
+                        </div>
+                        <div class="card-content">
+                            <p>Tôi đang phải đối mặt với áp lực rất lớn từ công việc hiện tại. Sếp luôn đặt ra những deadline không thực tế và mong đợi tôi làm việc ngoài giờ mà không được trả thêm...</p>
+                        </div>
+                        <div class="card-actions">
+                            <button class="action-btn btn-view"><i class="fas fa-eye"></i> Xem</button>
+                            <button class="action-btn btn-edit"><i class="fas fa-edit"></i> Sửa</button>
+                            <button class="action-btn btn-reject"><i class="fas fa-times"></i> Ẩn</button>
+                        </div>
+                    </div>
+
+                    <!-- Confession Card 3 -->
+                    <div class="data-card">
+                        <div class="card-header">
+                            <div class="card-title">Hành trình vượt qua nỗi sợ giao tiếp xã hội</div>
+                            <div class="card-status status-rejected">Đã từ chối</div>
+                        </div>
+                        <div class="card-meta">
+                            <div class="card-author">
+                                <i class="fas fa-user"></i>
+                                <span>Người dùng ẩn danh</span>
+                            </div>
+                            <div class="card-date">18/10/2023</div>
+                        </div>
+                        <div class="card-content">
+                            <p>Từ nhỏ, tôi đã luôn sợ hãi khi phải giao tiếp với người lạ. Tim đập nhanh, tay run, đổ mồ hôi và thậm chí đôi khi không thể nói nên lời...</p>
+                        </div>
+                        <div class="card-actions">
+                            <button class="action-btn btn-view"><i class="fas fa-eye"></i> Xem</button>
+                            <button class="action-btn btn-approve"><i class="fas fa-check"></i> Phê duyệt</button>
+                        </div>
+                    </div>
+
+                    <!-- Confession Card 4 -->
+                    <div class="data-card">
+                        <div class="card-header">
+                            <div class="card-title">Làm thế nào để vượt qua sự trì hoãn?</div>
+                            <div class="card-status status-pending">Chờ duyệt</div>
+                        </div>
+                        <div class="card-meta">
+                            <div class="card-author">
+                                <i class="fas fa-user"></i>
+                                <span>Người dùng ẩn danh</span>
+                            </div>
+                            <div class="card-date">20/10/2023</div>
+                        </div>
+                        <div class="card-content">
+                            <p>Tôi đã luôn gặp vấn đề với việc trì hoãn công việc. Dù đã thử nhiều phương pháp khác nhau nhưng không có cách nào hiệu quả lâu dài. Tôi cảm thấy mình đang lãng phí tiềm năng...</p>
+                        </div>
+                        <div class="card-actions">
+                            <button class="action-btn btn-view"><i class="fas fa-eye"></i> Xem</button>
+                            <button class="action-btn btn-approve"><i class="fas fa-check"></i> Duyệt</button>
+                            <button class="action-btn btn-reject"><i class="fas fa-times"></i> Từ chối</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pagination">
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">3</button>
+                    <button class="page-btn"><i class="fas fa-ellipsis-h"></i></button>
+                    <button class="page-btn">10</button>
+                    <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Statistics Section -->
+            <div id="stats" class="admin-content">
+                <div class="stats-container">
+                    <!-- Stat Card 1 -->
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-title">Bài test stress</div>
+                            <div class="stat-icon icon-stress">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value">2,547</div>
+                        <div class="stat-change change-positive">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>15% so với tháng trước</span>
+                        </div>
+                    </div>
+
+                    <!-- Stat Card 2 -->
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-title">Bài test lo âu</div>
+                            <div class="stat-icon icon-anxiety">
+                                <i class="fas fa-heartbeat"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value">1,986</div>
+                        <div class="stat-change change-positive">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>8% so với tháng trước</span>
+                        </div>
+                    </div>
+
+                    <!-- Stat Card 3 -->
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-title">Số người dùng mới</div>
+                            <div class="stat-icon icon-users">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value">852</div>
+                        <div class="stat-change change-positive">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>12% so với tháng trước</span>
+                        </div>
+                    </div>
+
+                    <!-- Stat Card 4 -->
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-title">Tổng số phiên trò chuyện</div>
+                            <div class="stat-icon icon-total">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value">5,432</div>
+                        <div class="stat-change change-negative">
+                            <i class="fas fa-arrow-down"></i>
+                            <span>3% so với tháng trước</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-placeholder">
+                        <i class="fas fa-chart-bar"></i>
+                        <h3>Biểu đồ thống kê kết quả test tâm trạng</h3>
+                        <p>Hiển thị phân bố mức độ stress và lo âu của người dùng qua các tháng</p>
+                    </div>
+                </div>
+
+                <h3>Chi tiết kết quả test tâm trạng</h3>
+                <div class="section-filters">
+                    <div class="filter-group">
+                        <div class="filter-btn active">Tất cả</div>
+                        <div class="filter-btn">Stress</div>
+                        <div class="filter-btn">Lo âu</div>
+                    </div>
+                    <div class="filter-group">
+                        <label for="date-filter" style="margin-right: 10px;">Thời gian:</label>
+                        <select id="date-filter" class="form-control" style="padding: 8px; border-radius: 20px;">
+                            <option value="7days">7 ngày qua</option>
+                            <option value="30days" selected>30 ngày qua</option>
+                            <option value="90days">90 ngày qua</option>
+                            <option value="year">1 năm qua</option>
+                        </select>
+                    </div>
+                </div>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Loại test</th>
+                            <th>Điểm số</th>
+                            <th>Mức độ</th>
+                            <th>Ngày thực hiện</th>
+                            <th>Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#TS4851</td>
+                            <td>Stress</td>
+                            <td>18/20</td>
+                            <td>Cao</td>
+                            <td>21/10/2023</td>
+                            <td>Đã nhận tư vấn</td>
+                        </tr>
+                        <tr>
+                            <td>#LA4850</td>
+                            <td>Lo âu</td>
+                            <td>15/21</td>
+                            <td>Trung bình</td>
+                            <td>21/10/2023</td>
+                            <td>Chưa nhận tư vấn</td>
+                        </tr>
+                        <tr>
+                            <td>#TS4849</td>
+                            <td>Stress</td>
+                            <td>12/20</td>
+                            <td>Trung bình</td>
+                            <td>20/10/2023</td>
+                            <td>Đã nhận tư vấn</td>
+                        </tr>
+                        <tr>
+                            <td>#LA4848</td>
+                            <td>Lo âu</td>
+                            <td>19/21</td>
+                            <td>Cao</td>
+                            <td>20/10/2023</td>
+                            <td>Đã nhận tư vấn</td>
+                        </tr>
+                        <tr>
+                            <td>#TS4847</td>
+                            <td>Stress</td>
+                            <td>8/20</td>
+                            <td>Thấp</td>
+                            <td>19/10/2023</td>
+                            <td>Chưa nhận tư vấn</td>
+                        </tr>
+                        <tr>
+                            <td>#LA4846</td>
+                            <td>Lo âu</td>
+                            <td>5/21</td>
+                            <td>Thấp</td>
+                            <td>19/10/2023</td>
+                            <td>Chưa nhận tư vấn</td>
+                        </tr>
+                        <tr>
+                            <td>#TS4845</td>
+                            <td>Stress</td>
+                            <td>17/20</td>
+                            <td>Cao</td>
+                            <td>18/10/2023</td>
+                            <td>Đã nhận tư vấn</td>
+                        </tr>
+                        <tr>
+                            <td>#LA4844</td>
+                            <td>Lo âu</td>
+                            <td>14/21</td>
+                            <td>Trung bình</td>
+                            <td>18/10/2023</td>
+                            <td>Đã nhận tư vấn</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="pagination">
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">3</button>
+                    <button class="page-btn"><i class="fas fa-ellipsis-h"></i></button>
+                    <button class="page-btn">15</button>
+                    <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Users Management Section -->
+            <div id="users" class="admin-content">
+                <div class="user-controls">
+                    <button class="btn btn-primary" id="add-user-btn">
+                        <i class="fas fa-plus"></i> Thêm người dùng
+                    </button>
+                </div>
+
+                <div class="section-filters">
+                    <div class="filter-group">
+                        <div class="filter-btn active">Tất cả</div>
+                        <div class="filter-btn">Admin</div>
+                        <div class="filter-btn">Chuyên gia</div>
+                        <div class="filter-btn">Người dùng</div>
+                    </div>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Tìm kiếm người dùng...">
+                    </div>
+                </div>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên</th>
+                            <th>Email</th>
+                            <th>Vai trò</th>
+                            <th>Ngày tham gia</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#U001</td>
+                            <td>Nguyễn Minh Anh</td>
+                            <td>minhanh@mindspace.vn</td>
+                            <td>Chuyên gia</td>
+                            <td>05/01/2023</td>
+                            <td>Hoạt động</td>
+                            <td>
+                                <button class="action-btn btn-edit"><i class="fas fa-edit"></i></button>
+                                <button class="action-btn btn-view"><i class="fas fa-eye"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#U002</td>
+                            <td>Trần Thanh Hương</td>
+                            <td>thanhhuong@mindspace.vn</td>
+                            <td>Chuyên gia</td>
+                            <td>15/01/2023</td>
+                            <td>Hoạt động</td>
+                            <td>
+                                <button class="action-btn btn-edit"><i class="fas fa-edit"></i></button>
+                                <button class="action-btn btn-view"><i class="fas fa-eye"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#U003</td>
+                            <td>Lê Văn Bình</td>
+                            <td>vanbinh@mindspace.vn</td>
+                            <td>Chuyên gia</td>
+                            <td>20/01/2023</td>
+                            <td>Hoạt động</td>
+                            <td>
+                                <button class="action-btn btn-edit"><i class="fas fa-edit"></i></button>
+                                <button class="action-btn btn-view"><i class="fas fa-eye"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#U004</td>
+                            <td>Phạm Thị Mai</td>
+                            <td>phammai@email.com</td>
+                            <td>Người dùng</td>
+                            <td>10/03/2023</td>
+                            <td>Hoạt động</td>
+                            <td>
+                                <button class="action-btn btn-edit"><i class="fas fa-edit"></i></button>
+                                <button class="action-btn btn-view"><i class="fas fa-eye"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#U005</td>
+                            <td>Trần Văn Hùng</td>
+                            <td>vanhung@email.com</td>
+                            <td>Người dùng</td>
+                            <td>15/03/2023</td>
+                            <td>Tạm khóa</td>
+                            <td>
+                                <button class="action-btn btn-edit"><i class="fas fa-edit"></i></button>
+                                <button class="action-btn btn-view"><i class="fas fa-eye"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#U006</td>
+                            <td>Nguyễn Văn Admin</td>
+                            <td>admin@mindspace.vn</td>
+                            <td>Admin</td>
+                            <td>01/01/2023</td>
+                            <td>Hoạt động</td>
+                            <td>
+                                <button class="action-btn btn-edit"><i class="fas fa-edit"></i></button>
+                                <button class="action-btn btn-view"><i class="fas fa-eye"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 style="margin-top: 3rem;">Cấu hình Chatbot</h3>
+                <div class="chatbot-config" style="background: var(--light-bg); padding: 2rem; border-radius: 12px; box-shadow: var(--shadow);">
+                    <div style="margin-bottom: 2rem;">
+                        <h4 style="margin-bottom: 1rem;">Cài đặt chung</h4>
+                        <div style="display: flex; flex-wrap: wrap; gap: 2rem;">
+                            <div style="flex: 1; min-width: 250px;">
+                                <div class="form-group">
+                                    <label for="bot-name">Tên hiển thị</label>
+                                    <input type="text" id="bot-name" class="form-control" value="Mindbot" style="width: 100%;">
+                                </div>
+                            </div>
+                            <div style="flex: 1; min-width: 250px;">
+                                <div class="form-group">
+                                    <label for="bot-status">Trạng thái</label>
+                                    <select id="bot-status" class="form-control" style="width: 100%;">
+                                        <option value="active" selected>Đang hoạt động</option>
+                                        <option value="maintenance">Bảo trì</option>
+                                        <option value="disabled">Vô hiệu hóa</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 2rem;">
+                        <h4 style="margin-bottom: 1rem;">Cấu hình phản hồi</h4>
+                        <div class="form-group">
+                            <label for="welcome-message">Tin nhắn chào mừng</label>
+                            <textarea id="welcome-message" class="form-control" rows="3" style="width: 100%;">Xin chào! Mình là Mindbot, trợ lý ảo của Mindspace. Mình ở đây để hỗ trợ bạn trên hành trình chăm sóc sức khỏe tinh thần. Bạn có thể chia sẻ với mình về những gì bạn đang trải qua hoặc đặt câu hỏi về bất kỳ chủ đề nào liên quan đến sức khỏe tinh thần.</textarea>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <button class="btn btn-primary">Lưu cấu hình</button>
+                        <button class="btn btn-secondary">Đặt lại mặc định</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal" id="view-confession-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Xem bài chia sẻ</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h3>Cảm giác cô đơn giữa đám đông</h3>
+                <div style="margin: 1rem 0; color: var(--light-text);">
+                    <span>Người dùng ẩn danh</span> | <span>21/10/2023</span>
+                </div>
+                <p>Dạo gần đây, tôi thường xuyên cảm thấy cô đơn ngay cả khi đang ở giữa những người bạn thân thiết. Tôi vẫn cười nói, tham gia các hoạt động, nhưng bên trong lại cảm thấy trống rỗng. Có ai từng trải qua cảm giác tương tự không? Làm thế nào để vượt qua cảm giác này?</p>
+                <div style="margin-top: 1.5rem;">
+                    <p><strong>Chủ đề:</strong> Stress</p>
+                    <p><strong>Trạng thái:</strong> Chờ duyệt</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outlined modal-close-btn">Đóng</button>
+                <button class="btn btn-primary">Duyệt bài viết</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="add-user-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Thêm người dùng mới</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="add-user-form">
+                    <div class="modal-form-group">
+                        <label for="user-name">Họ và tên</label>
+                        <input type="text" id="user-name" class="modal-form-control" placeholder="Nhập họ và tên">
+                    </div>
+                    <div class="modal-form-group">
+                        <label for="user-email">Email</label>
+                        <input type="email" id="user-email" class="modal-form-control" placeholder="Nhập địa chỉ email">
+                    </div>
+                    <div class="modal-form-group">
+                        <label for="user-role">Vai trò</label>
+                        <select id="user-role" class="modal-form-control">
+                            <option value="">-- Chọn vai trò --</option>
+                            <option value="admin">Admin</option>
+                            <option value="expert">Chuyên gia</option>
+                            <option value="user">Người dùng</option>
+                        </select>
+                    </div>
+                    <div class="modal-form-group">
+                        <label for="user-password">Mật khẩu</label>
+                        <input type="password" id="user-password" class="modal-form-control" placeholder="Nhập mật khẩu">
+                    </div>
+                    <div class="modal-form-group">
+                        <label for="user-confirm-password">Xác nhận mật khẩu</label>
+                        <input type="password" id="user-confirm-password" class="modal-form-control" placeholder="Nhập lại mật khẩu">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outlined modal-close-btn">Hủy</button>
+                <button class="btn btn-primary" id="save-user-btn">Lưu</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <h2>Mindspace</h2>
+                <p>Không gian an toàn để nuôi dưỡng và chữa lành tâm hồn của bạn</p>
+            </div>
+            <div class="footer-links">
+                <h3>Liên kết nhanh</h3>
+                <ul>
+                    <li><a href="../index.html">Trang chủ</a></li>
+                    <li><a href="mental-check.html">Kiểm tra tâm trạng</a></li>
+                    <li><a href="confession.html">Góc chia sẻ</a></li>
+                    <li><a href="experts.html">Góc chuyên gia</a></li>
+                    <li><a href="resources.html">Thư viện tài nguyên</a></li>
+                    <li><a href="chatbot.html">Chatbot hỗ trợ</a></li>
+                    <li><a href="contact.html">Liên hệ & hỗ trợ</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h3>Liên hệ</h3>
+                <p><i class="fas fa-phone"></i> Hotline: 1800-xxxx-xxxx</p>
+                <p><i class="fas fa-envelope"></i> Email: support@mindspace.vn</p>
+                <div class="social-media">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Mindspace. Tất cả quyền được bảo lưu.</p>
+        </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tab switching
+            const adminTabs = document.querySelectorAll('.admin-tab');
+            const adminContents = document.querySelectorAll('.admin-content');
+            
+            adminTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // Remove active class from all tabs and contents
+                    adminTabs.forEach(t => t.classList.remove('active'));
+                    adminContents.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked tab and corresponding content
+                    this.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // Filter buttons
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Get all filter buttons in the same group
+                    const filterGroup = this.closest('.filter-group');
+                    const groupButtons = filterGroup.querySelectorAll('.filter-btn');
+                    
+                    // Remove active class from all buttons in the group
+                    groupButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                });
+            });
+            
+            // Modal functionality
+            const modals = document.querySelectorAll('.modal');
+            const viewButtons = document.querySelectorAll('.btn-view');
+            const addUserBtn = document.getElementById('add-user-btn');
+            const modalCloseButtons = document.querySelectorAll('.modal-close, .modal-close-btn');
+            
+            function openModal(modalId) {
+                document.getElementById(modalId).classList.add('active');
+            }
+            
+            function closeModals() {
+                modals.forEach(modal => modal.classList.remove('active'));
+            }
+            
+            viewButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    openModal('view-confession-modal');
+                });
+            });
+            
+            if (addUserBtn) {
+                addUserBtn.addEventListener('click', function() {
+                    openModal('add-user-modal');
+                });
+            }
+            
+            modalCloseButtons.forEach(button => {
+                button.addEventListener('click', closeModals);
+            });
+            
+            // Close modal when clicking outside the modal content
+            modals.forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        closeModals();
+                    }
+                });
+            });
+            
+            // Form submission - Add user
+            const saveUserBtn = document.getElementById('save-user-btn');
+            
+            if (saveUserBtn) {
+                saveUserBtn.addEventListener('click', function() {
+                    const userName = document.getElementById('user-name').value;
+                    const userEmail = document.getElementById('user-email').value;
+                    const userRole = document.getElementById('user-role').value;
+                    const userPassword = document.getElementById('user-password').value;
+                    const userConfirmPassword = document.getElementById('user-confirm-password').value;
+                    
+                    // Simple validation
+                    if (!userName || !userEmail || !userRole || !userPassword) {
+                        alert('Vui lòng điền đầy đủ thông tin.');
+                        return;
+                    }
+                    
+                    if (userPassword !== userConfirmPassword) {
+                        alert('Mật khẩu xác nhận không khớp.');
+                        return;
+                    }
+                    
+                    // Success message
+                    alert('Thêm người dùng thành công!');
+                    closeModals();
+                    document.getElementById('add-user-form').reset();
+                });
+            }
+        });
+    </script>
+</body>
+</html>

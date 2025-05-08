@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot hỗ trợ - Mindspace</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Page-specific styles */
+        .chatbot-container {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .chat-section {
+            flex: 2;
+            background-color: var(--light-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 600px;
+        }
+
+        .chat-header {
+            padding: 1rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chat-header h2 {
+            margin: 0;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .chat-header h2 i {
+            margin-right: 0.5rem;
+        }
+
+        .chat-status {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #4CAF50;
+            margin-right: 0.5rem;
+        }
+
+        .chat-messages {
+            flex-grow: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message {
+            max-width: 70%;
+            padding: 1rem;
+            border-radius: 12px;
+            position: relative;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .bot-message {
+            align-self: flex-start;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            border-bottom-left-radius: 0;
+        }
+
+        .user-message {
+            align-self: flex-end;
+            background-color: var(--primary-color);
+            color: white;
+            border-bottom-right-radius: 0;
+        }
+
+        .message-time {
+            font-size: 0.75rem;
+            opacity: 0.7;
+            margin-top: 0.5rem;
+            text-align: right;
+        }
+
+        .typing-indicator {
+            align-self: flex-start;
+            background-color: var(--background-color);
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.9rem;
+            color: var(--light-text);
+            display: none;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--light-text);
+            border-radius: 50%;
+            animation: typingAnimation 1.5s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typingAnimation {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-5px); }
+        }
+
+        .chat-input {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 1rem;
+        }
+
+        .chat-input input {
+            flex-grow: 1;
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1rem;
+        }
+
+        .chat-input input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .chat-input button {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .chat-input button:hover {
+            background-color: #5652d8;
+        }
+
+        .chat-input button i {
+            font-size: 1.2rem;
+        }
+
+        .suggestions-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .chat-intro {
+            background-color: var(--light-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .chat-intro h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .chat-intro h3 i {
+            margin-right: 0.5rem;
+        }
+
+        .chat-intro p {
+            margin-bottom: 1.5rem;
+            color: var(--light-text);
+        }
+
+        .suggestion-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .suggestion-card {
+            background-color: var(--light-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .suggestion-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .suggestion-card h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .suggestion-card p {
+            font-size: 0.9rem;
+            color: var(--light-text);
+            margin-bottom: 0.5rem;
+        }
+
+        .try-it {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+
+        .try-it i {
+            margin-left: 0.3rem;
+            font-size: 0.8rem;
+        }
+
+        .resources-section {
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .resources-section h2 {
+            margin-bottom: 1.5rem;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .resource-item {
+            background-color: var(--light-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+        }
+
+        .resource-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .resource-item h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.75rem;
+        }
+
+        .resource-item p {
+            color: var(--light-text);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 992px) {
+            .chatbot-container {
+                flex-direction: column;
+            }
+
+            .chat-section {
+                height: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Mindspace</h2>
+                <button id="menu-toggle" class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="../index.html"><i class="fas fa-home"></i> Trang chủ (Home)</a>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="mental-check.html"><i class="fas fa-brain"></i> Kiểm tra tâm trạng (Mental Check-in)</a>
+                        <ul class="submenu">
+                            <li><a href="mental-check.html#stress-test">Bài test stress</a></li>
+                            <li><a href="mental-check.html#anxiety-test">Bài test lo âu</a></li>
+                            <li><a href="mental-check.html#results">Kết quả + Gợi ý tài nguyên</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="confession.html"><i class="fas fa-comments"></i> Góc chia sẻ (Confession Box)</a>
+                        <ul class="submenu">
+                            <li><a href="confession.html#form">Form gửi chia sẻ ẩn danh</a></li>
+                            <li><a href="confession.html#stories">Danh sách bài chia sẻ công khai</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="experts.html"><i class="fas fa-user-md"></i> Góc chuyên gia (Expert's Corner)</a>
+                        <ul class="submenu">
+                            <li><a href="experts.html#intro">Giới thiệu chuyên gia/admin tư vấn</a></li>
+                            <li><a href="experts.html#articles">Các bài viết phân tích tâm lý</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="resources.html"><i class="fas fa-book-open"></i> Thư viện tài nguyên (Articles & Tips)</a>
+                        <ul class="submenu">
+                            <li><a href="resources.html#tips">Mẹo thư giãn</a></li>
+                            <li><a href="resources.html#maintain">Duy trì tâm lực</a></li>
+                            <li><a href="resources.html#stories">Câu chuyện truyền cảm hứng</a></li>
+                            <li><a href="resources.html#media">Infographic / Podcast (nếu có)</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu active">
+                        <a href="chatbot.html"><i class="fas fa-robot"></i> Chatbot hỗ trợ (Chatbox)</a>
+                        <ul class="submenu">
+                            <li><a href="#chat">Trò chuyện với Mindbot</a></li>
+                            <li><a href="#suggest">Gợi ý nội dung theo tình huống</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="contact.html"><i class="fas fa-envelope"></i> Liên hệ & hỗ trợ (Contact)</a>
+                        <ul class="submenu">
+                            <li><a href="contact.html#hotline">Hotline / email</a></li>
+                            <li><a href="contact.html#form">Trung tâm tư vấn để xuất</a></li>
+                            <li><a href="contact.html#social">Mạng xã hội</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu admin-link">
+                        <a href="admin.html"><i class="fas fa-lock"></i> Admin Dashboard</a>
+                        <ul class="submenu">
+                            <li><a href="admin.html#confessions">Quản lý bài chia sẻ</a></li>
+                            <li><a href="admin.html#stats">Thống kê test tâm trạng</a></li>
+                            <li><a href="admin.html#users">Quản lý người dùng/chatbot</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="page-header">
+                <h1>Chatbot hỗ trợ</h1>
+                <p>Trò chuyện với Mindbot để nhận hỗ trợ, lời khuyên và tài nguyên phù hợp với nhu cầu của bạn</p>
+            </header>
+
+            <section id="chat" class="chatbot-container">
+                <div class="chat-section">
+                    <div class="chat-header">
+                        <h2><i class="fas fa-robot"></i> Mindbot</h2>
+                        <div class="chat-status">
+                            <span class="status-dot"></span>
+                            <span>Đang hoạt động</span>
+                        </div>
+                    </div>
+                    <div class="chat-messages">
+                        <div class="message bot-message">
+                            <div class="message-content">
+                                Xin chào! Mình là Mindbot, trợ lý ảo của Mindspace. Mình ở đây để hỗ trợ bạn trên hành trình chăm sóc sức khỏe tinh thần. Bạn có thể chia sẻ với mình về những gì bạn đang trải qua hoặc đặt câu hỏi về bất kỳ chủ đề nào liên quan đến sức khỏe tinh thần.
+                            </div>
+                            <div class="message-time">10:30</div>
+                        </div>
+                        <div class="message bot-message">
+                            <div class="message-content">
+                                Bạn đang cảm thấy thế nào hôm nay? Có điều gì mình có thể giúp đỡ không?
+                            </div>
+                            <div class="message-time">10:30</div>
+                        </div>
+                        <div class="typing-indicator">
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                        </div>
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" placeholder="Nhập tin nhắn của bạn..." id="chat-input">
+                        <button id="send-message"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+
+                <div id="suggest" class="suggestions-section">
+                    <div class="chat-intro">
+                        <h3><i class="fas fa-info-circle"></i> Về Mindbot</h3>
+                        <p>Mindbot là trợ lý ảo được thiết kế để hỗ trợ bạn trong hành trình chăm sóc sức khỏe tinh thần. Mindbot có thể:</p>
+                        <ul>
+                            <li>Lắng nghe và đồng cảm với những gì bạn đang trải qua</li>
+                            <li>Cung cấp thông tin về các vấn đề sức khỏe tinh thần khác nhau</li>
+                            <li>Gợi ý các kỹ thuật đối phó với stress, lo âu và các cảm xúc tiêu cực</li>
+                            <li>Hướng dẫn bạn đến các tài nguyên phù hợp trên Mindspace</li>
+                            <li>Kết nối bạn với chuyên gia nếu cần thiết</li>
+                        </ul>
+                        <p><strong>Lưu ý:</strong> Mindbot không thay thế cho tư vấn chuyên nghiệp. Nếu bạn đang gặp khủng hoảng, vui lòng liên hệ đường dây nóng hỗ trợ tâm lý hoặc nhờ sự giúp đỡ từ chuyên gia.</p>
+                    </div>
+
+                    <h3>Gợi ý chủ đề trò chuyện</h3>
+                    <div class="suggestion-cards">
+                        <div class="suggestion-card" data-suggestion="Làm thế nào để đối phó với cảm giác lo âu?">
+                            <h4>Đối phó với lo âu</h4>
+                            <p>Tìm hiểu về các kỹ thuật đối phó với lo âu và cách thực hành trong cuộc sống hàng ngày.</p>
+                            <div class="try-it">Hỏi Mindbot <i class="fas fa-chevron-right"></i></div>
+                        </div>
+                        <div class="suggestion-card" data-suggestion="Tôi đang cảm thấy kiệt sức và stress với công việc. Bạn có lời khuyên nào không?">
+                            <h4>Quản lý stress</h4>
+                            <p>Khám phá các phương pháp quản lý stress hiệu quả và tránh kiệt sức.</p>
+                            <div class="try-it">Hỏi Mindbot <i class="fas fa-chevron-right"></i></div>
+                        </div>
+                        <div class="suggestion-card" data-suggestion="Tôi cảm thấy cô đơn và khó kết nối với mọi người. Làm thế nào để cải thiện?">
+                            <h4>Khắc phục cô đơn</h4>
+                            <p>Tìm hiểu cách xây dựng kết nối xã hội và đối phó với cảm giác cô đơn.</p>
+                            <div class="try-it">Hỏi Mindbot <i class="fas fa-chevron-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="resources-section">
+                <h2>Tài nguyên được gợi ý từ Mindbot</h2>
+                <p>Dựa trên các cuộc trò chuyện phổ biến, Mindbot gợi ý những tài nguyên sau đây có thể hữu ích cho bạn.</p>
+
+                <div class="resources-grid">
+                    <div class="resource-item">
+                        <h4>Thiền chánh niệm cơ bản</h4>
+                        <p>Hướng dẫn từng bước về cách thực hành thiền chánh niệm, phù hợp cho người mới bắt đầu.</p>
+                        <a href="resources.html#tips" class="btn btn-outlined">Xem chi tiết</a>
+                    </div>
+                    <div class="resource-item">
+                        <h4>Kỹ thuật thở để giảm lo âu</h4>
+                        <p>Các bài tập thở đơn giản nhưng hiệu quả có thể thực hiện bất cứ lúc nào, bất cứ nơi đâu.</p>
+                        <a href="resources.html#tips" class="btn btn-outlined">Xem chi tiết</a>
+                    </div>
+                    <div class="resource-item">
+                        <h4>Nhật ký biết ơn</h4>
+                        <p>Tìm hiểu về lợi ích của việc viết nhật ký biết ơn và cách bắt đầu thói quen này.</p>
+                        <a href="resources.html#maintain" class="btn btn-outlined">Xem chi tiết</a>
+                    </div>
+                    <div class="resource-item">
+                        <h4>Giấc ngủ và sức khỏe tinh thần</h4>
+                        <p>Khám phá mối liên hệ giữa giấc ngủ và sức khỏe tinh thần, cùng với các mẹo cải thiện giấc ngủ.</p>
+                        <a href="resources.html#maintain" class="btn btn-outlined">Xem chi tiết</a>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <h2>Mindspace</h2>
+                <p>Không gian an toàn để nuôi dưỡng và chữa lành tâm hồn của bạn</p>
+            </div>
+            <div class="footer-links">
+                <h3>Liên kết nhanh</h3>
+                <ul>
+                    <li><a href="../index.html">Trang chủ</a></li>
+                    <li><a href="mental-check.html">Kiểm tra tâm trạng</a></li>
+                    <li><a href="confession.html">Góc chia sẻ</a></li>
+                    <li><a href="experts.html">Góc chuyên gia</a></li>
+                    <li><a href="resources.html">Thư viện tài nguyên</a></li>
+                    <li><a href="chatbot.html">Chatbot hỗ trợ</a></li>
+                    <li><a href="contact.html">Liên hệ & hỗ trợ</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h3>Liên hệ</h3>
+                <p><i class="fas fa-phone"></i> Hotline: 1800-xxxx-xxxx</p>
+                <p><i class="fas fa-envelope"></i> Email: support@mindspace.vn</p>
+                <div class="social-media">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Mindspace. Tất cả quyền được bảo lưu.</p>
+        </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatInput = document.getElementById('chat-input');
+            const sendButton = document.getElementById('send-message');
+            const chatMessages = document.querySelector('.chat-messages');
+            const typingIndicator = document.querySelector('.typing-indicator');
+            const suggestionCards = document.querySelectorAll('.suggestion-card');
+            
+            // Simple responses for the chatbot
+            const botResponses = [
+                "Cảm ơn bạn đã chia sẻ. Có vẻ như bạn đang trải qua một thời gian khó khăn. Bạn có muốn tìm hiểu về một số kỹ thuật đối phó với những cảm xúc này không?",
+                "Tôi hiểu điều đó có thể rất khó khăn. Trong trường hợp này, bạn có thể thử thực hành một số bài tập thở sâu để giúp bản thân bình tĩnh lại. Bạn đã thử bài tập thở 4-7-8 chưa?",
+                "Đó là một câu hỏi tốt! Stress và lo âu là những phản ứng tự nhiên của cơ thể, nhưng khi chúng trở nên quá mức, có thể ảnh hưởng đến cuộc sống hàng ngày. Bạn có muốn biết thêm về các kỹ thuật quản lý stress không?",
+                "Cảm ơn bạn đã chia sẻ điều này với tôi. Cảm giác cô đơn có thể rất khó khăn. Bạn có thể thử tham gia vào góc chia sẻ của chúng tôi để kết nối với những người có trải nghiệm tương tự.",
+                "Thật tuyệt khi bạn đang tìm cách cải thiện sức khỏe tinh thần của mình! Một số thói quen hàng ngày như thiền, tập thể dục và duy trì kết nối xã hội có thể giúp ích rất nhiều."
+            ];
+            
+            // Add a message to the chat
+            function addMessage(content, isUser = false) {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message');
+                messageDiv.classList.add(isUser ? 'user-message' : 'bot-message');
+                
+                const now = new Date();
+                const timeString = `${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')}`;
+                
+                messageDiv.innerHTML = `
+                    <div class="message-content">${content}</div>
+                    <div class="message-time">${timeString}</div>
+                `;
+                
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            // Show typing indicator
+            function showTypingIndicator() {
+                typingIndicator.style.display = 'flex';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            // Hide typing indicator
+            function hideTypingIndicator() {
+                typingIndicator.style.display = 'none';
+            }
+            
+            // Send a message
+            function sendMessage() {
+                const message = chatInput.value.trim();
+                if (message === '') return;
+                
+                // Add user message
+                addMessage(message, true);
+                chatInput.value = '';
+                
+                // Show typing indicator
+                showTypingIndicator();
+                
+                // Simulate bot thinking and then respond
+                setTimeout(() => {
+                    hideTypingIndicator();
+                    
+                    // Random response from the array
+                    const randomIndex = Math.floor(Math.random() * botResponses.length);
+                    addMessage(botResponses[randomIndex]);
+                }, 1500);
+            }
+            
+            // Event listeners
+            sendButton.addEventListener('click', sendMessage);
+            
+            chatInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+            
+            // Suggestion cards
+            suggestionCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const suggestion = this.getAttribute('data-suggestion');
+                    chatInput.value = suggestion;
+                    sendMessage();
+                });
+            });
+        });
+    </script>
+</body>
+</html>

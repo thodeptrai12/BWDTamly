@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Góc chuyên gia - Mindspace</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Page-specific styles */
+        .experts-section {
+            margin-bottom: 3rem;
+        }
+
+        .expert-intro {
+            margin-bottom: 2rem;
+        }
+
+        .experts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .expert-card {
+            background-color: var(--light-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .expert-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .expert-image {
+            height: 200px;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .expert-image i {
+            font-size: 5rem;
+            color: var(--primary-color);
+        }
+
+        .expert-details {
+            padding: 1.5rem;
+        }
+
+        .expert-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .expert-title {
+            font-size: 0.9rem;
+            color: var(--light-text);
+            margin-bottom: 1rem;
+        }
+
+        .expert-bio {
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+
+        .expert-specialties {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .specialty-tag {
+            background-color: rgba(108, 99, 255, 0.1);
+            color: var(--primary-color);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .expert-contact {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .expert-contact a {
+            display: flex;
+            align-items: center;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .expert-contact a i {
+            margin-right: 0.5rem;
+        }
+
+        /* Articles section */
+        .articles-section {
+            margin-bottom: 3rem;
+        }
+
+        .articles-filter {
+            display: flex;
+            margin-bottom: 2rem;
+            overflow-x: auto;
+            gap: 1rem;
+            padding-bottom: 0.5rem;
+        }
+
+        .filter-button {
+            background-color: rgba(108, 99, 255, 0.1);
+            color: var(--primary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: var(--transition);
+            border: none;
+        }
+
+        .filter-button.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .article-card {
+            background-color: var(--light-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .article-image {
+            height: 200px;
+            background-color: #f0f0f0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .article-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .article-category {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .article-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .article-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+
+        .article-excerpt {
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .article-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .article-link {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .article-stats {
+            display: flex;
+            gap: 1rem;
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+
+        .article-stats span {
+            display: flex;
+            align-items: center;
+        }
+
+        .article-stats i {
+            margin-right: 0.3rem;
+        }
+
+        /* Newsletter Section */
+        .newsletter-section {
+            background-color: var(--light-bg);
+            padding: 3rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            margin-bottom: 3rem;
+        }
+
+        .newsletter-section h2 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .newsletter-section p {
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-form input {
+            flex-grow: 1;
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 30px 0 0 30px;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1rem;
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .newsletter-form button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0 1.5rem;
+            border-radius: 0 30px 30px 0;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .newsletter-form button:hover {
+            background-color: #5652d8;
+        }
+
+        @media (max-width: 768px) {
+            .experts-grid,
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .newsletter-form input,
+            .newsletter-form button {
+                width: 100%;
+                border-radius: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Mindspace</h2>
+                <button id="menu-toggle" class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="../index.html"><i class="fas fa-home"></i> Trang chủ (Home)</a>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="mental-check.html"><i class="fas fa-brain"></i> Kiểm tra tâm trạng (Mental Check-in)</a>
+                        <ul class="submenu">
+                            <li><a href="mental-check.html#stress-test">Bài test stress</a></li>
+                            <li><a href="mental-check.html#anxiety-test">Bài test lo âu</a></li>
+                            <li><a href="mental-check.html#results">Kết quả + Gợi ý tài nguyên</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="confession.html"><i class="fas fa-comments"></i> Góc chia sẻ (Confession Box)</a>
+                        <ul class="submenu">
+                            <li><a href="confession.html#form">Form gửi chia sẻ ẩn danh</a></li>
+                            <li><a href="confession.html#stories">Danh sách bài chia sẻ công khai</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu active">
+                        <a href="experts.html"><i class="fas fa-user-md"></i> Góc chuyên gia (Expert's Corner)</a>
+                        <ul class="submenu">
+                            <li><a href="#intro">Giới thiệu chuyên gia/admin tư vấn</a></li>
+                            <li><a href="#articles">Các bài viết phân tích tâm lý</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="resources.html"><i class="fas fa-book-open"></i> Thư viện tài nguyên (Articles & Tips)</a>
+                        <ul class="submenu">
+                            <li><a href="resources.html#tips">Mẹo thư giãn</a></li>
+                            <li><a href="resources.html#maintain">Duy trì tâm lực</a></li>
+                            <li><a href="resources.html#stories">Câu chuyện truyền cảm hứng</a></li>
+                            <li><a href="resources.html#media">Infographic / Podcast (nếu có)</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="chatbot.html"><i class="fas fa-robot"></i> Chatbot hỗ trợ (Chatbox)</a>
+                        <ul class="submenu">
+                            <li><a href="chatbot.html#chat">Trò chuyện với Mindbot</a></li>
+                            <li><a href="chatbot.html#suggest">Gợi ý nội dung theo tình huống</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="contact.html"><i class="fas fa-envelope"></i> Liên hệ & hỗ trợ (Contact)</a>
+                        <ul class="submenu">
+                            <li><a href="contact.html#hotline">Hotline / email</a></li>
+                            <li><a href="contact.html#form">Trung tâm tư vấn để xuất</a></li>
+                            <li><a href="contact.html#social">Mạng xã hội</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu admin-link">
+                        <a href="admin.html"><i class="fas fa-lock"></i> Admin Dashboard</a>
+                        <ul class="submenu">
+                            <li><a href="admin.html#confessions">Quản lý bài chia sẻ</a></li>
+                            <li><a href="admin.html#stats">Thống kê test tâm trạng</a></li>
+                            <li><a href="admin.html#users">Quản lý người dùng/chatbot</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="page-header">
+                <h1>Góc chuyên gia</h1>
+                <p>Gặp gỡ đội ngũ chuyên gia tâm lý và khám phá những bài viết phân tích sâu sắc</p>
+            </header>
+
+            <!-- Experts Introduction Section -->
+            <section id="intro" class="experts-section">
+                <div class="expert-intro">
+                    <h2>Đội ngũ chuyên gia tư vấn</h2>
+                    <p>Tại Mindspace, chúng tôi tự hào có đội ngũ chuyên gia tâm lý hàng đầu, sẵn sàng cung cấp lời khuyên và hỗ trợ cho bạn trên hành trình chăm sóc sức khỏe tinh thần.</p>
+                </div>
+
+                <div class="experts-grid">
+                    <!-- Expert 1 -->
+                    <div class="expert-card">
+                        <div class="expert-image">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <div class="expert-details">
+                            <h3 class="expert-name">TS. Nguyễn Minh Anh</h3>
+                            <p class="expert-title">Tiến sĩ Tâm lý học lâm sàng</p>
+                            <p class="expert-bio">Với hơn 15 năm kinh nghiệm, TS. Minh Anh chuyên về các vấn đề lo âu, trầm cảm và liệu pháp nhận thức hành vi (CBT).</p>
+                            <div class="expert-specialties">
+                                <span class="specialty-tag">Lo âu</span>
+                                <span class="specialty-tag">Trầm cảm</span>
+                                <span class="specialty-tag">CBT</span>
+                                <span class="specialty-tag">Tâm lý trẻ em</span>
+                            </div>
+                            <div class="expert-contact">
+                                <a href="#"><i class="fas fa-calendar-alt"></i> Đặt lịch tư vấn</a>
+                                <a href="#"><i class="fas fa-envelope"></i> Liên hệ</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Expert 2 -->
+                    <div class="expert-card">
+                        <div class="expert-image">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <div class="expert-details">
+                            <h3 class="expert-name">ThS. Trần Thanh Hương</h3>
+                            <p class="expert-title">Thạc sĩ Tâm lý học tư vấn</p>
+                            <p class="expert-bio">ThS. Thanh Hương có chuyên môn sâu về các vấn đề tâm lý gia đình, căng thẳng công việc và các kỹ thuật thư giãn.</p>
+                            <div class="expert-specialties">
+                                <span class="specialty-tag">Gia đình</span>
+                                <span class="specialty-tag">Stress công việc</span>
+                                <span class="specialty-tag">Kỹ thuật thư giãn</span>
+                                <span class="specialty-tag">Mindfulness</span>
+                            </div>
+                            <div class="expert-contact">
+                                <a href="#"><i class="fas fa-calendar-alt"></i> Đặt lịch tư vấn</a>
+                                <a href="#"><i class="fas fa-envelope"></i> Liên hệ</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Expert 3 -->
+                    <div class="expert-card">
+                        <div class="expert-image">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <div class="expert-details">
+                            <h3 class="expert-name">ThS. Lê Văn Bình</h3>
+                            <p class="expert-title">Thạc sĩ Tâm lý học lâm sàng</p>
+                            <p class="expert-bio">ThS. Văn Bình chuyên về các vấn đề mối quan hệ, rối loạn giấc ngủ và quản lý cảm xúc cho người trẻ.</p>
+                            <div class="expert-specialties">
+                                <span class="specialty-tag">Mối quan hệ</span>
+                                <span class="specialty-tag">Rối loạn giấc ngủ</span>
+                                <span class="specialty-tag">Quản lý cảm xúc</span>
+                                <span class="specialty-tag">Người trẻ</span>
+                            </div>
+                            <div class="expert-contact">
+                                <a href="#"><i class="fas fa-calendar-alt"></i> Đặt lịch tư vấn</a>
+                                <a href="#"><i class="fas fa-envelope"></i> Liên hệ</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Articles Section -->
+            <section id="articles" class="articles-section">
+                <h2>Bài viết phân tích tâm lý</h2>
+                <p>Khám phá những bài viết sâu sắc từ các chuyên gia của chúng tôi về nhiều vấn đề tâm lý khác nhau.</p>
+
+                <div class="articles-filter">
+                    <button class="filter-button active">Tất cả</button>
+                    <button class="filter-button">Stress & Lo âu</button>
+                    <button class="filter-button">Trầm cảm</button>
+                    <button class="filter-button">Mối quan hệ</button>
+                    <button class="filter-button">Kỹ năng sống</button>
+                    <button class="filter-button">Thiền & Chánh niệm</button>
+                    <button class="filter-button">Phát triển bản thân</button>
+                </div>
+
+                <div class="articles-grid">
+                    <!-- Article 1 -->
+                    <div class="article-card">
+                        <div class="article-image">
+                            <img src="https://pixabay.com/get/g404b1b338fd1f289433a1459c76e501f428651237794dcfaf183c95958bc5c2a57c93768daf36596674f79f27c82869878673c8d278c179a81c935ec51488b29_1280.png" alt="Minh họa về sức khỏe tinh thần">
+                            <span class="article-category">Stress & Lo âu</span>
+                        </div>
+                        <div class="article-content">
+                            <h3 class="article-title">Phân biệt giữa lo âu bình thường và rối loạn lo âu</h3>
+                            <div class="article-meta">
+                                <span>TS. Nguyễn Minh Anh</span>
+                                <span>15/08/2023</span>
+                            </div>
+                            <div class="article-excerpt">
+                                <p>Lo âu là một phản ứng tự nhiên của cơ thể trước những tình huống đe dọa hoặc căng thẳng. Tuy nhiên, khi nào lo âu trở thành một vấn đề cần được điều trị? Bài viết này sẽ giúp bạn hiểu rõ sự khác biệt...</p>
+                            </div>
+                            <div class="article-footer">
+                                <a href="#" class="article-link">Đọc tiếp</a>
+                                <div class="article-stats">
+                                    <span><i class="fas fa-eye"></i> 1.2k</span>
+                                    <span><i class="fas fa-comment"></i> 32</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Article 2 -->
+                    <div class="article-card">
+                        <div class="article-image">
+                            <img src="https://pixabay.com/get/g61f7584575fccb83e37fbc9d586d36532e0e0f3a08a9b398cdb5479aa9f260f21ed8884f2ded9cb4b0b92114c1b4d2a1787385823b2d17dd92e9553c178cea62_1280.jpg" alt="Minh họa về sức khỏe tinh thần">
+                            <span class="article-category">Thiền & Chánh niệm</span>
+                        </div>
+                        <div class="article-content">
+                            <h3 class="article-title">Thực hành thiền chánh niệm trong cuộc sống hàng ngày</h3>
+                            <div class="article-meta">
+                                <span>ThS. Trần Thanh Hương</span>
+                                <span>10/08/2023</span>
+                            </div>
+                            <div class="article-excerpt">
+                                <p>Thiền chánh niệm không chỉ giới hạn ở việc ngồi thiền trên tấm thảm. Bạn có thể tích hợp chánh niệm vào nhiều hoạt động hàng ngày như ăn uống, đi bộ, hay thậm chí là việc nhà. Bài viết này sẽ hướng dẫn bạn...</p>
+                            </div>
+                            <div class="article-footer">
+                                <a href="#" class="article-link">Đọc tiếp</a>
+                                <div class="article-stats">
+                                    <span><i class="fas fa-eye"></i> 987</span>
+                                    <span><i class="fas fa-comment"></i> 27</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Article 3 -->
+                    <div class="article-card">
+                        <div class="article-image">
+                            <img src="https://pixabay.com/get/gf78009c7ba5aac61e90720ff5d6cd3d943a339cd0c45a335fb2e5f1d84ff82a3e9cbfc2ca0c3d3d30aa608414ec5a4d7adc1f359a06895cb4946916c2c7f078f_1280.jpg" alt="Không gian thiền định yên bình">
+                            <span class="article-category">Mối quan hệ</span>
+                        </div>
+                        <div class="article-content">
+                            <h3 class="article-title">Xây dựng và duy trì mối quan hệ lành mạnh</h3>
+                            <div class="article-meta">
+                                <span>ThS. Lê Văn Bình</span>
+                                <span>05/08/2023</span>
+                            </div>
+                            <div class="article-excerpt">
+                                <p>Mối quan hệ lành mạnh đóng vai trò quan trọng đối với sức khỏe tinh thần. Từ mối quan hệ gia đình, bạn bè đến đồng nghiệp, việc xây dựng và duy trì mối quan hệ lành mạnh đòi hỏi những kỹ năng cụ thể...</p>
+                            </div>
+                            <div class="article-footer">
+                                <a href="#" class="article-link">Đọc tiếp</a>
+                                <div class="article-stats">
+                                    <span><i class="fas fa-eye"></i> 856</span>
+                                    <span><i class="fas fa-comment"></i> 19</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Article 4 -->
+                    <div class="article-card">
+                        <div class="article-image">
+                            <img src="https://pixabay.com/get/g29eb2dc0f5589893a912cf8d35a6f941bc10c6d10322fbc34bc9430af735fec8d7fc86f3a05dcef26aa3f55a4b88a9aa53440833267590824f4faa083d32961e_1280.jpg" alt="Không gian thiền định yên bình">
+                            <span class="article-category">Trầm cảm</span>
+                        </div>
+                        <div class="article-content">
+                            <h3 class="article-title">Nhận biết dấu hiệu trầm cảm và cách tìm kiếm sự giúp đỡ</h3>
+                            <div class="article-meta">
+                                <span>TS. Nguyễn Minh Anh</span>
+                                <span>01/08/2023</span>
+                            </div>
+                            <div class="article-excerpt">
+                                <p>Trầm cảm là một rối loạn tâm lý phổ biến nhưng thường bị bỏ qua hoặc hiểu sai. Việc nhận biết các dấu hiệu trầm cảm ở bản thân hoặc người thân là bước đầu tiên quan trọng để tìm kiếm sự giúp đỡ kịp thời...</p>
+                            </div>
+                            <div class="article-footer">
+                                <a href="#" class="article-link">Đọc tiếp</a>
+                                <div class="article-stats">
+                                    <span><i class="fas fa-eye"></i> 1.5k</span>
+                                    <span><i class="fas fa-comment"></i> 41</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <a href="#" class="btn btn-outlined">Xem thêm bài viết</a>
+                </div>
+            </section>
+
+            <!-- Newsletter Section -->
+            <section class="newsletter-section">
+                <h2>Đăng ký nhận bản tin từ chuyên gia</h2>
+                <p>Nhận các bài viết, lời khuyên và thông tin mới nhất về sức khỏe tinh thần từ đội ngũ chuyên gia của chúng tôi thông qua email.</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Nhập địa chỉ email của bạn" required>
+                    <button type="submit">Đăng ký</button>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <h2>Mindspace</h2>
+                <p>Không gian an toàn để nuôi dưỡng và chữa lành tâm hồn của bạn</p>
+            </div>
+            <div class="footer-links">
+                <h3>Liên kết nhanh</h3>
+                <ul>
+                    <li><a href="../index.html">Trang chủ</a></li>
+                    <li><a href="mental-check.html">Kiểm tra tâm trạng</a></li>
+                    <li><a href="confession.html">Góc chia sẻ</a></li>
+                    <li><a href="experts.html">Góc chuyên gia</a></li>
+                    <li><a href="resources.html">Thư viện tài nguyên</a></li>
+                    <li><a href="chatbot.html">Chatbot hỗ trợ</a></li>
+                    <li><a href="contact.html">Liên hệ & hỗ trợ</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h3>Liên hệ</h3>
+                <p><i class="fas fa-phone"></i> Hotline: 1800-xxxx-xxxx</p>
+                <p><i class="fas fa-envelope"></i> Email: support@mindspace.vn</p>
+                <div class="social-media">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Mindspace. Tất cả quyền được bảo lưu.</p>
+        </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Filter articles when clicking on filter buttons
+            const filterButtons = document.querySelectorAll('.filter-button');
+            
+            if (filterButtons) {
+                filterButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        // Remove active class from all buttons
+                        filterButtons.forEach(btn => btn.classList.remove('active'));
+                        
+                        // Add active class to clicked button
+                        this.classList.add('active');
+                        
+                        // In a real application, this would filter the articles based on category
+                        // For now, we'll just simulate a loading state
+                        const articlesGrid = document.querySelector('.articles-grid');
+                        articlesGrid.style.opacity = '0.5';
+                        
+                        setTimeout(() => {
+                            articlesGrid.style.opacity = '1';
+                        }, 500);
+                    });
+                });
+            }
+            
+            // Handle newsletter form submission
+            const newsletterForm = document.querySelector('.newsletter-form');
+            
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const emailInput = this.querySelector('input[type="email"]');
+                    const email = emailInput.value.trim();
+                    
+                    if (email) {
+                        alert('Cảm ơn bạn đã đăng ký! Bạn sẽ nhận được bản tin của chúng tôi tại ' + email);
+                        emailInput.value = '';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,32 +1,244 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MindSpace</title>
-  <link rel="stylesheet" href="style.css"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mindspace - Không gian an toàn để nuôi dưỡng và chữa lành tâm hồn</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header>
-    <div class="logo">🧠 <span>Mind</span>Space</div>
-    <nav>
-      <a href="#">Trang chủ</a>
-      <a href="#">Kiểm tra tâm trạng</a>
-      <a href="#">Góc chia sẻ</a>
-      <a href="#">Chuyên gia</a>
-      <a href="#">Thư viện</a>
-      <a href="#">đánh giá</a>
-    </nav>
-    <a href="#" class="contact-btn">Liên hệ hỗ trợ</a>
-  </header>
+    <div class="container">
+        <!-- Navbar -->
+        <header class="navbar">
+            <div class="navbar-container">
+                <div class="navbar-logo">
+                    <i class="fas fa-brain"></i>
+                    <span>Mindspace</span>
+                </div>
+                <button id="menu-toggle" class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <nav class="navbar-nav">
+                    <ul>
+                        <li class="active">
+                            <a href="index.html"><i class="fas fa-home"></i> Trang chủ</a>
+                        </li>
+                        <li class="has-submenu">
+                            <a href="pages/mental-check.html"><i class="fas fa-brain"></i> Kiểm tra tâm trạng</a>
+                            <ul class="submenu">
+                                <li><a href="pages/mental-check.html#stress-test">Bài test stress</a></li>
+                                <li><a href="pages/mental-check.html#anxiety-test">Bài test lo âu</a></li>
+                                <li><a href="pages/mental-check.html#results">Kết quả + Gợi ý tài nguyên</a></li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <a href="pages/confession.html"><i class="fas fa-comments"></i> Góc chia sẻ</a>
+                            <ul class="submenu">
+                                <li><a href="pages/confession.html#form">Form gửi chia sẻ ẩn danh</a></li>
+                                <li><a href="pages/confession.html#stories">Danh sách bài chia sẻ công khai</a></li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <a href="pages/experts.html"><i class="fas fa-user-md"></i> Góc chuyên gia</a>
+                            <ul class="submenu">
+                                <li><a href="pages/experts.html#intro">Giới thiệu chuyên gia/admin tư vấn</a></li>
+                                <li><a href="pages/experts.html#articles">Các bài viết phân tích tâm lý</a></li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <a href="pages/resources.html"><i class="fas fa-book-open"></i> Thư viện tài nguyên</a>
+                            <ul class="submenu">
+                                <li><a href="pages/resources.html#tips">Mẹo thư giãn</a></li>
+                                <li><a href="pages/resources.html#maintain">Duy trì tâm lực</a></li>
+                                <li><a href="pages/resources.html#stories">Câu chuyện truyền cảm hứng</a></li>
+                                <li><a href="pages/resources.html#media">Infographic / Podcast</a></li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <a href="pages/chatbot.html"><i class="fas fa-robot"></i> Chatbot hỗ trợ</a>
+                            <ul class="submenu">
+                                <li><a href="pages/chatbot.html#chat">Trò chuyện với Mindbot</a></li>
+                                <li><a href="pages/chatbot.html#suggest">Gợi ý nội dung theo tình huống</a></li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <a href="pages/contact.html"><i class="fas fa-envelope"></i> Liên hệ & hỗ trợ</a>
+                            <ul class="submenu">
+                                <li><a href="pages/contact.html#hotline">Hotline / email</a></li>
+                                <li><a href="pages/contact.html#form">Trung tâm tư vấn để xuất</a></li>
+                                <li><a href="pages/contact.html#social">Mạng xã hội</a></li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu admin-link">
+                            <a href="pages/admin.html"><i class="fas fa-lock"></i> Admin Dashboard</a>
+                            <ul class="submenu">
+                                <li><a href="pages/admin.html#confessions">Quản lý bài chia sẻ</a></li>
+                                <li><a href="pages/admin.html#stats">Thống kê test tâm trạng</a></li>
+                                <li><a href="pages/admin.html#users">Quản lý người dùng/chatbot</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
 
-  <main class="hero">
-    <h1>Chào mừng đến với <span class="highlight">MindSpace</span></h1>
-    <p>Không gian an toàn để nuôi dưỡng và chữa lành tâm hồn của bạn. Nơi bạn có thể tìm kiếm sự bình yên nội tâm và phát triển sức khỏe tinh thần.</p>
-    <div class="actions">
-      <a href="#" class="btn primary">Kiểm tra sức khỏe tâm lý</a>
-      <a href="#" class="btn outline">Chia sẻ câu chuyện</a>
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="page-header">
+                <h1>Chào mừng đến với Mindspace</h1>
+                <p>Không gian an toàn để nuôi dưỡng và chữa lành tâm hồn của bạn</p>
+            </header>
+
+            <section class="hero-section">
+                <div class="hero-content">
+                    <h2>Hãy bắt đầu hành trình chăm sóc sức khỏe tinh thần của bạn</h2>
+                    <p>Mindspace là nơi bạn có thể tìm kiếm sự hỗ trợ, chia sẻ câu chuyện của mình, và học hỏi từ các chuyên gia tâm lý.</p>
+                    <div class="cta-buttons">
+                        <a href="pages/mental-check.html" class="btn btn-primary">Kiểm tra tâm trạng</a>
+                        <a href="pages/chatbot.html" class="btn btn-secondary">Trò chuyện với Mindbot</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="https://pixabay.com/get/g14465e9ac58a852f981d648ddc560ece998f4eb0e731e1dd2599c2448872948c4082a004a52685c6ee78af72a176a699c703487eb7941711bc15cd4b81d947be_1280.jpg" alt="Không gian thiền định yên bình">
+                </div>
+            </section>
+
+            <section class="features-section">
+                <h2>Các dịch vụ của chúng tôi</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-brain"></i>
+                        <h3>Kiểm tra tâm trạng</h3>
+                        <p>Đánh giá mức độ stress và lo âu với các bài test khoa học và nhận gợi ý tài nguyên phù hợp.</p>
+                        <a href="pages/mental-check.html" class="feature-link">Bắt đầu kiểm tra</a>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-comments"></i>
+                        <h3>Góc chia sẻ</h3>
+                        <p>Chia sẻ câu chuyện của bạn một cách ẩn danh và kết nối với những người có trải nghiệm tương tự.</p>
+                        <a href="pages/confession.html" class="feature-link">Chia sẻ ngay</a>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-user-md"></i>
+                        <h3>Góc chuyên gia</h3>
+                        <p>Tham khảo ý kiến và bài viết từ các chuyên gia tâm lý giàu kinh nghiệm.</p>
+                        <a href="pages/experts.html" class="feature-link">Xem bài viết</a>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-robot"></i>
+                        <h3>Chatbot hỗ trợ</h3>
+                        <p>Trao đổi với Mindbot để nhận hỗ trợ tức thì và gợi ý các tài nguyên phù hợp.</p>
+                        <a href="pages/chatbot.html" class="feature-link">Trò chuyện ngay</a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="testimonials-section">
+                <h2>Câu chuyện từ cộng đồng</h2>
+                <div class="testimonials-carousel">
+                    <div class="testimonial">
+                        <p>"Mindspace đã giúp tôi nhận ra rằng tôi không đơn độc trong cuộc chiến với lo âu. Các bài viết và cộng đồng ở đây thực sự đã thay đổi cuộc sống của tôi."</p>
+                        <div class="testimonial-author">
+                            <span class="name">Người dùng ẩn danh</span>
+                        </div>
+                    </div>
+                    <div class="testimonial">
+                        <p>"Tôi đã học được nhiều kỹ thuật thư giãn hữu ích từ thư viện tài nguyên. Bây giờ tôi có thể đối phó với stress hiệu quả hơn trong cuộc sống hàng ngày."</p>
+                        <div class="testimonial-author">
+                            <span class="name">Người dùng ẩn danh</span>
+                        </div>
+                    </div>
+                    <div class="testimonial">
+                        <p>"Mindbot luôn ở đó khi tôi cần ai đó để trò chuyện, ngay cả vào những giờ khuya. Đó là một người bạn đồng hành tuyệt vời trên hành trình chữa lành của tôi."</p>
+                        <div class="testimonial-author">
+                            <span class="name">Người dùng ẩn danh</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-nav">
+                    <button class="prev-btn"><i class="fas fa-chevron-left"></i></button>
+                    <button class="next-btn"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </section>
+
+            <section class="resources-preview">
+                <h2>Tài nguyên nổi bật</h2>
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <div class="resource-image">
+                            <img src="https://pixabay.com/get/gda7e0a34fab4ae598cd848632dc43521bef2d02a02bfd499a77ab56420eb494b55f1bb757d779995e83d0648d33ffa5a9c144978fdc30fde366266c67253c619_1280.jpg" alt="Minh họa về sức khỏe tinh thần">
+                        </div>
+                        <div class="resource-content">
+                            <h3>5 bài tập thở giúp giảm lo âu</h3>
+                            <p>Khám phá các kỹ thuật thở đơn giản nhưng hiệu quả giúp kiểm soát cơn lo âu.</p>
+                            <a href="pages/resources.html#tips" class="resource-link">Đọc thêm</a>
+                        </div>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-image">
+                            <img src="https://pixabay.com/get/g61f7584575fccb83e37fbc9d586d36532e0e0f3a08a9b398cdb5479aa9f260f21ed8884f2ded9cb4b0b92114c1b4d2a1787385823b2d17dd92e9553c178cea62_1280.jpg" alt="Minh họa về sức khỏe tinh thần">
+                        </div>
+                        <div class="resource-content">
+                            <h3>Hành trình chiến thắng trầm cảm</h3>
+                            <p>Câu chuyện cảm động về hành trình vượt qua trầm cảm của một thành viên trong cộng đồng.</p>
+                            <a href="pages/resources.html#stories" class="resource-link">Đọc thêm</a>
+                        </div>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-image">
+                            <img src="https://pixabay.com/get/g507afd30d24880c3dfc1e412894869ca41cefa0eb4b0fb95f4e1d810d97973c5d84819cc2190c35ca52127b9230a3691551fcc6c0fe60fa0d3d23818a1dde0c1_1280.jpg" alt="Cảnh thiên nhiên chữa lành">
+                        </div>
+                        <div class="resource-content">
+                            <h3>Sức mạnh của kết nối với thiên nhiên</h3>
+                            <p>Tìm hiểu cách thiên nhiên có thể giúp phục hồi sức khỏe tinh thần và cân bằng cảm xúc.</p>
+                            <a href="pages/resources.html#maintain" class="resource-link">Đọc thêm</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="view-all">
+                    <a href="pages/resources.html" class="btn btn-outlined">Xem tất cả tài nguyên</a>
+                </div>
+            </section>
+        </main>
     </div>
-  </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <h2>Mindspace</h2>
+                <p>Không gian an toàn để nuôi dưỡng và chữa lành tâm hồn của bạn</p>
+            </div>
+            <div class="footer-links">
+                <h3>Liên kết nhanh</h3>
+                <ul>
+                    <li><a href="index.html">Trang chủ</a></li>
+                    <li><a href="pages/mental-check.html">Kiểm tra tâm trạng</a></li>
+                    <li><a href="pages/confession.html">Góc chia sẻ</a></li>
+                    <li><a href="pages/experts.html">Góc chuyên gia</a></li>
+                    <li><a href="pages/resources.html">Thư viện tài nguyên</a></li>
+                    <li><a href="pages/chatbot.html">Chatbot hỗ trợ</a></li>
+                    <li><a href="pages/contact.html">Liên hệ & hỗ trợ</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h3>Liên hệ</h3>
+                <p><i class="fas fa-phone"></i> Hotline: 1800-xxxx-xxxx</p>
+                <p><i class="fas fa-envelope"></i> Email: support@mindspace.vn</p>
+                <div class="social-media">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Mindspace. Tất cả quyền được bảo lưu.</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
 </body>
 </html>

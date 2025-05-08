@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liên hệ & hỗ trợ - Mindspace</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Page-specific styles */
+        .contact-section {
+            margin-bottom: 3rem;
+        }
+
+        .contact-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .contact-card {
+            background-color: var(--light-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .contact-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .contact-info {
+            margin-bottom: 1.5rem;
+            color: var(--light-text);
+        }
+
+        .contact-action {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: rgba(108, 99, 255, 0.1);
+            border-radius: 30px;
+            color: var(--primary-color);
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .contact-action:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .contact-form-container {
+            background-color: var(--light-bg);
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 3rem;
+        }
+
+        .form-row {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .form-footer {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .privacy-note {
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        /* Support Centers Section */
+        .centers-section {
+            margin-bottom: 3rem;
+        }
+
+        .centers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .center-card {
+            background-color: var(--light-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .center-info {
+            flex: 2;
+            min-width: 300px;
+        }
+
+        .center-name {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .center-address {
+            margin-bottom: 1rem;
+            color: var(--light-text);
+        }
+
+        .center-details {
+            margin-bottom: 1rem;
+        }
+
+        .center-detail {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .center-detail i {
+            width: 20px;
+            color: var(--primary-color);
+            margin-right: 0.5rem;
+        }
+
+        .center-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .center-map {
+            flex: 1;
+            min-width: 250px;
+            height: 200px;
+            background-color: var(--background-color);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .map-placeholder {
+            color: var(--light-text);
+            font-size: 0.9rem;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .map-placeholder i {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+            display: block;
+        }
+
+        /* Social Media Section */
+        .social-section {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .social-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--light-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--primary-color);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .social-icon:hover {
+            transform: translateY(-5px);
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .social-info {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            margin-bottom: 3rem;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background-color: var(--light-bg);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        .faq-question:hover {
+            color: var(--primary-color);
+        }
+
+        .faq-question i {
+            transition: var(--transition);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-answer-content {
+            padding-bottom: 1.5rem;
+            color: var(--light-text);
+        }
+
+        .faq-item.active .faq-question {
+            color: var(--primary-color);
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+
+        @media (max-width: 768px) {
+            .contact-methods,
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .center-card {
+                flex-direction: column;
+            }
+
+            .center-actions {
+                flex-direction: column;
+            }
+
+            .social-icons {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Mindspace</h2>
+                <button id="menu-toggle" class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="../index.html"><i class="fas fa-home"></i> Trang chủ (Home)</a>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="mental-check.html"><i class="fas fa-brain"></i> Kiểm tra tâm trạng (Mental Check-in)</a>
+                        <ul class="submenu">
+                            <li><a href="mental-check.html#stress-test">Bài test stress</a></li>
+                            <li><a href="mental-check.html#anxiety-test">Bài test lo âu</a></li>
+                            <li><a href="mental-check.html#results">Kết quả + Gợi ý tài nguyên</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="confession.html"><i class="fas fa-comments"></i> Góc chia sẻ (Confession Box)</a>
+                        <ul class="submenu">
+                            <li><a href="confession.html#form">Form gửi chia sẻ ẩn danh</a></li>
+                            <li><a href="confession.html#stories">Danh sách bài chia sẻ công khai</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="experts.html"><i class="fas fa-user-md"></i> Góc chuyên gia (Expert's Corner)</a>
+                        <ul class="submenu">
+                            <li><a href="experts.html#intro">Giới thiệu chuyên gia/admin tư vấn</a></li>
+                            <li><a href="experts.html#articles">Các bài viết phân tích tâm lý</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="resources.html"><i class="fas fa-book-open"></i> Thư viện tài nguyên (Articles & Tips)</a>
+                        <ul class="submenu">
+                            <li><a href="resources.html#tips">Mẹo thư giãn</a></li>
+                            <li><a href="resources.html#maintain">Duy trì tâm lực</a></li>
+                            <li><a href="resources.html#stories">Câu chuyện truyền cảm hứng</a></li>
+                            <li><a href="resources.html#media">Infographic / Podcast (nếu có)</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="chatbot.html"><i class="fas fa-robot"></i> Chatbot hỗ trợ (Chatbox)</a>
+                        <ul class="submenu">
+                            <li><a href="chatbot.html#chat">Trò chuyện với Mindbot</a></li>
+                            <li><a href="chatbot.html#suggest">Gợi ý nội dung theo tình huống</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu active">
+                        <a href="contact.html"><i class="fas fa-envelope"></i> Liên hệ & hỗ trợ (Contact)</a>
+                        <ul class="submenu">
+                            <li><a href="#hotline">Hotline / email</a></li>
+                            <li><a href="#form">Trung tâm tư vấn để xuất</a></li>
+                            <li><a href="#social">Mạng xã hội</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu admin-link">
+                        <a href="admin.html"><i class="fas fa-lock"></i> Admin Dashboard</a>
+                        <ul class="submenu">
+                            <li><a href="admin.html#confessions">Quản lý bài chia sẻ</a></li>
+                            <li><a href="admin.html#stats">Thống kê test tâm trạng</a></li>
+                            <li><a href="admin.html#users">Quản lý người dùng/chatbot</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="page-header">
+                <h1>Liên hệ & hỗ trợ</h1>
+                <p>Kết nối với chúng tôi để nhận hỗ trợ hoặc chia sẻ ý kiến của bạn</p>
+            </header>
+
+            <!-- Contact Methods Section -->
+            <section id="hotline" class="contact-section">
+                <h2>Thông tin liên hệ</h2>
+                <p>Dưới đây là nhiều cách để bạn có thể liên hệ với đội ngũ hỗ trợ của Mindspace.</p>
+
+                <div class="contact-methods">
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <h3 class="contact-title">Hotline hỗ trợ</h3>
+                        <p class="contact-info">Đường dây hỗ trợ tâm lý 24/7 của chúng tôi luôn sẵn sàng lắng nghe và giúp đỡ bạn.</p>
+                        <p class="contact-info">
+                            <strong>1800-xxxx-xxxx</strong><br>
+                            <small>(Miễn phí cuộc gọi, hoạt động 24/7)</small>
+                        </p>
+                        <a href="tel:1800xxxxxxxx" class="contact-action">Gọi ngay</a>
+                    </div>
+
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h3 class="contact-title">Email hỗ trợ</h3>
+                        <p class="contact-info">Gửi email cho chúng tôi và đội ngũ hỗ trợ sẽ phản hồi trong vòng 24 giờ.</p>
+                        <p class="contact-info">
+                            <strong>support@mindspace.vn</strong><br>
+                            <small>(Phản hồi trong vòng 24 giờ)</small>
+                        </p>
+                        <a href="mailto:support@mindspace.vn" class="contact-action">Gửi email</a>
+                    </div>
+
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-comment-dots"></i>
+                        </div>
+                        <h3 class="contact-title">Chat trực tuyến</h3>
+                        <p class="contact-info">Trò chuyện trực tiếp với Mindbot hoặc đội ngũ hỗ trợ trực tuyến của chúng tôi.</p>
+                        <p class="contact-info">
+                            <strong>Trực tuyến từ 8:00 - 22:00</strong><br>
+                            <small>(Hàng ngày)</small>
+                        </p>
+                        <a href="chatbot.html" class="contact-action">Bắt đầu chat</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Form Section -->
+            <section id="form" class="contact-section">
+                <h2>Gửi yêu cầu hỗ trợ</h2>
+                <p>Điền vào mẫu dưới đây để gửi yêu cầu hỗ trợ hoặc đề xuất của bạn. Chúng tôi sẽ phản hồi trong thời gian sớm nhất.</p>
+
+                <div class="contact-form-container">
+                    <form id="contact-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Họ và tên</label>
+                                <input type="text" id="name" class="form-control" placeholder="Nhập họ và tên của bạn">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" class="form-control" placeholder="Nhập địa chỉ email của bạn">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="phone">Số điện thoại (tùy chọn)</label>
+                                <input type="tel" id="phone" class="form-control" placeholder="Nhập số điện thoại của bạn">
+                            </div>
+                            <div class="form-group">
+                                <label for="subject">Chủ đề</label>
+                                <select id="subject" class="form-control">
+                                    <option value="">-- Chọn chủ đề --</option>
+                                    <option value="support">Yêu cầu hỗ trợ</option>
+                                    <option value="feedback">Góp ý / Phản hồi</option>
+                                    <option value="partnership">Đề xuất hợp tác</option>
+                                    <option value="technical">Vấn đề kỹ thuật</option>
+                                    <option value="other">Khác</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Nội dung</label>
+                            <textarea id="message" class="form-control" placeholder="Nhập nội dung tin nhắn của bạn..." rows="5"></textarea>
+                        </div>
+                        <div class="form-footer">
+                            <div class="privacy-note">
+                                Bằng cách gửi biểu mẫu này, bạn đồng ý với <a href="#">Chính sách bảo mật</a> của chúng tôi.
+                            </div>
+                            <button type="submit" class="btn btn-primary">Gửi tin nhắn</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Support Centers Section -->
+            <section class="contact-section">
+                <h2>Trung tâm tư vấn</h2>
+                <p>Các trung tâm tư vấn trực tiếp của Mindspace, nơi bạn có thể đặt lịch gặp trực tiếp các chuyên gia tâm lý.</p>
+
+                <div class="centers-container">
+                    <!-- Center 1 -->
+                    <div class="center-card">
+                        <div class="center-info">
+                            <h3 class="center-name">Mindspace Trung tâm Hà Nội</h3>
+                            <p class="center-address">Tầng 5, Tòa nhà ABC, 123 Đường XYZ, Quận Cầu Giấy, Hà Nội</p>
+                            <div class="center-details">
+                                <div class="center-detail">
+                                    <i class="fas fa-phone"></i>
+                                    <span>024-xxxx-xxxx</span>
+                                </div>
+                                <div class="center-detail">
+                                    <i class="fas fa-clock"></i>
+                                    <span>Thứ Hai - Thứ Bảy: 8:00 - 20:00</span>
+                                </div>
+                                <div class="center-detail">
+                                    <i class="fas fa-user-md"></i>
+                                    <span>5 chuyên gia tâm lý</span>
+                                </div>
+                            </div>
+                            <div class="center-actions">
+                                <a href="#" class="btn btn-outlined">Đặt lịch hẹn</a>
+                                <a href="tel:024xxxxxxxx" class="btn btn-secondary">Gọi ngay</a>
+                            </div>
+                        </div>
+                        <div class="center-map">
+                            <div class="map-placeholder">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <p>Bản đồ trung tâm Hà Nội</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Center 2 -->
+                    <div class="center-card">
+                        <div class="center-info">
+                            <h3 class="center-name">Mindspace Trung tâm Hồ Chí Minh</h3>
+                            <p class="center-address">Tầng 8, Tòa nhà DEF, 456 Đường UVW, Quận 1, TP. Hồ Chí Minh</p>
+                            <div class="center-details">
+                                <div class="center-detail">
+                                    <i class="fas fa-phone"></i>
+                                    <span>028-xxxx-xxxx</span>
+                                </div>
+                                <div class="center-detail">
+                                    <i class="fas fa-clock"></i>
+                                    <span>Thứ Hai - Chủ Nhật: 8:00 - 20:00</span>
+                                </div>
+                                <div class="center-detail">
+                                    <i class="fas fa-user-md"></i>
+                                    <span>7 chuyên gia tâm lý</span>
+                                </div>
+                            </div>
+                            <div class="center-actions">
+                                <a href="#" class="btn btn-outlined">Đặt lịch hẹn</a>
+                                <a href="tel:028xxxxxxxx" class="btn btn-secondary">Gọi ngay</a>
+                            </div>
+                        </div>
+                        <div class="center-map">
+                            <div class="map-placeholder">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <p>Bản đồ trung tâm Hồ Chí Minh</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Social Media Section -->
+            <section id="social" class="social-section">
+                <h2>Kết nối với chúng tôi trên mạng xã hội</h2>
+                <p>Theo dõi Mindspace trên các nền tảng mạng xã hội để cập nhật thông tin mới nhất và tham gia cộng đồng của chúng tôi.</p>
+
+                <div class="social-icons">
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                </div>
+
+                <div class="social-info">
+                    <p>Tham gia cộng đồng Mindspace để nhận thông tin cập nhật về sức khỏe tinh thần, mẹo hữu ích, sự kiện sắp tới và kết nối với những người có cùng chí hướng.</p>
+                </div>
+            </section>
+
+            <!-- FAQ Section -->
+            <section class="faq-section">
+                <h2>Câu hỏi thường gặp</h2>
+                <p>Dưới đây là một số câu hỏi thường gặp về dịch vụ của Mindspace. Nếu bạn không tìm thấy câu trả lời cho câu hỏi của mình, vui lòng liên hệ với chúng tôi.</p>
+
+                <div class="faq-container">
+                    <!-- FAQ Item 1 -->
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Các dịch vụ của Mindspace có tính phí không?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                Mindspace cung cấp cả dịch vụ miễn phí và có phí. Các tài nguyên cơ bản, bài kiểm tra tâm trạng, và góc chia sẻ đều miễn phí. Tuy nhiên, các buổi tư vấn trực tiếp với chuyên gia, một số khóa học chuyên sâu và các tính năng nâng cao sẽ có chi phí. Chúng tôi cam kết cung cấp nhiều tài nguyên miễn phí chất lượng cao để hỗ trợ mọi người.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 2 -->
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Làm thế nào để đặt lịch hẹn với chuyên gia tâm lý?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                Để đặt lịch hẹn với chuyên gia tâm lý, bạn có thể: (1) Truy cập trang "Góc chuyên gia" và chọn "Đặt lịch tư vấn" bên dưới thông tin của chuyên gia mà bạn muốn gặp; (2) Gọi điện thoại trực tiếp đến trung tâm tư vấn gần nhất; (3) Sử dụng form liên hệ trên trang này và chọn chủ đề "Đặt lịch hẹn"; hoặc (4) Liên hệ qua email support@mindspace.vn. Chúng tôi sẽ xác nhận lịch hẹn của bạn trong vòng 24 giờ.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 3 -->
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Mindspace có bảo mật thông tin cá nhân của tôi không?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                Có, Mindspace cam kết bảo mật thông tin cá nhân của tất cả người dùng. Tất cả dữ liệu được mã hóa và chỉ được sử dụng cho mục đích cung cấp dịch vụ. Chúng tôi không bao giờ chia sẻ thông tin cá nhân với bên thứ ba khi chưa có sự đồng ý rõ ràng từ bạn. Các chia sẻ ẩn danh của bạn sẽ luôn được giữ ẩn danh. Bạn có thể tìm hiểu thêm trong Chính sách bảo mật của chúng tôi.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 4 -->
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Tôi có thể trở thành cộng tác viên hoặc chuyên gia cho Mindspace không?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                Có, Mindspace luôn tìm kiếm những chuyên gia tâm lý có trình độ và đam mê để gia nhập đội ngũ của chúng tôi. Nếu bạn là chuyên gia tâm lý được cấp phép, hoặc muốn đóng góp nội dung cho nền tảng của chúng tôi, vui lòng gửi CV và thông tin liên hệ của bạn đến careers@mindspace.vn. Chúng tôi cũng chào đón các sinh viên tâm lý học muốn thực tập tại các trung tâm của chúng tôi.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 5 -->
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Làm thế nào để tôi biết mình có nên tìm kiếm sự giúp đỡ chuyên nghiệp không?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                Nếu bạn đang gặp khó khăn về cảm xúc, hành vi hoặc tâm lý ảnh hưởng đến cuộc sống hàng ngày, đó có thể là lúc nên tìm kiếm sự giúp đỡ chuyên nghiệp. Các dấu hiệu bao gồm thay đổi về giấc ngủ hoặc ăn uống, mất hứng thú với các hoạt động yêu thích, cảm giác buồn bã kéo dài, lo lắng không kiểm soát được, hoặc ý nghĩ tự hại. Chúng tôi khuyến khích bạn làm các bài kiểm tra tâm trạng trên trang web của chúng tôi, nhưng hãy nhớ rằng chúng không thay thế cho chẩn đoán chuyên nghiệp. Khi nghi ngờ, hãy tìm kiếm sự giúp đỡ - đó là dấu hiệu của sức mạnh, không phải yếu đuối.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <h2>Mindspace</h2>
+                <p>Không gian an toàn để nuôi dưỡng và chữa lành tâm hồn của bạn</p>
+            </div>
+            <div class="footer-links">
+                <h3>Liên kết nhanh</h3>
+                <ul>
+                    <li><a href="../index.html">Trang chủ</a></li>
+                    <li><a href="mental-check.html">Kiểm tra tâm trạng</a></li>
+                    <li><a href="confession.html">Góc chia sẻ</a></li>
+                    <li><a href="experts.html">Góc chuyên gia</a></li>
+                    <li><a href="resources.html">Thư viện tài nguyên</a></li>
+                    <li><a href="chatbot.html">Chatbot hỗ trợ</a></li>
+                    <li><a href="contact.html">Liên hệ & hỗ trợ</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h3>Liên hệ</h3>
+                <p><i class="fas fa-phone"></i> Hotline: 1800-xxxx-xxxx</p>
+                <p><i class="fas fa-envelope"></i> Email: support@mindspace.vn</p>
+                <div class="social-media">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Mindspace. Tất cả quyền được bảo lưu.</p>
+        </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Contact form submission
+            const contactForm = document.getElementById('contact-form');
+            
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Get form values
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const phone = document.getElementById('phone').value;
+                    const subject = document.getElementById('subject').value;
+                    const message = document.getElementById('message').value;
+                    
+                    // Validate form
+                    if (!name) {
+                        alert('Vui lòng nhập họ và tên của bạn.');
+                        return;
+                    }
+                    
+                    if (!email) {
+                        alert('Vui lòng nhập địa chỉ email của bạn.');
+                        return;
+                    }
+                    
+                    if (!subject) {
+                        alert('Vui lòng chọn chủ đề.');
+                        return;
+                    }
+                    
+                    if (!message) {
+                        alert('Vui lòng nhập nội dung tin nhắn.');
+                        return;
+                    }
+                    
+                    // Simulate form submission
+                    alert('Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi trong thời gian sớm nhất.');
+                    
+                    // Reset form
+                    contactForm.reset();
+                });
+            }
+            
+            // FAQ accordion functionality
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                
+                question.addEventListener('click', () => {
+                    // Toggle active class on clicked item
+                    item.classList.toggle('active');
+                    
+                    // Optional: Close other items when one is opened
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
